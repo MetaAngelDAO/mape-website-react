@@ -13,7 +13,7 @@ const TxToast: FC<IProps> = ({ txId }) => (
       className={s.link}
       target="_blank"
       rel="noreferrer noopener"
-      href={`https://rinkeby.etherscan.io/search?f=0&q=${txId}`}
+      href={`https://etherscan.io/search?f=0&q=${txId}`}
     >
       {`${txId.slice(0, 5)}...${txId.slice(-5)}`}
     </a>
