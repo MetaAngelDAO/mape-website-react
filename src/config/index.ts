@@ -2,7 +2,7 @@ import { AbiItem } from 'web3-utils';
 
 export const password = 'AngelNFT999&';
 export const contractConfig = {
-  address: '0xd9145CCE52D386f254917e481eB44e9943F39138',
+  address: '0xf0401f774b453c551974222D3224347CE9D3e4f7',
   abi: [
     {
       inputs: [],
