@@ -1,6 +1,6 @@
 import { AbiItem } from 'web3-utils';
 
-export const password = 'AngelNFT999&';
+export const password = '';
 export const contractConfig = {
   address: '0x458a5bc5822C85ebF29Bd72515de62a7aBaD68Cf',
   abi: [
@@ -318,7 +318,7 @@ export const contractConfig = {
           type: 'address',
         },
       ],
-      name: 'ownerAngel',
+      name: 'ownerMape',
       outputs: [],
       stateMutability: 'nonpayable',
       type: 'function',
