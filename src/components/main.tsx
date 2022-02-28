@@ -5,7 +5,7 @@ import { contractConfig } from 'config';
 import TxHash from './txToast';
 import s from './main.module.scss';
 
-import gif from '../assets/metaangeldao.gif';
+import gif from '../assets/MAPE.gif';
 import { notify } from 'utils/toaster';
 
 const Main: VFC = () => {
@@ -13,8 +13,8 @@ const Main: VFC = () => {
   const [userAddress, setUserAddress] = useState('');
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (+e.target.value >= 99) {
-      setValue('99');
+    if (+e.target.value >= 10) {
+      setValue('10');
     } else setValue(e.target.value);
   };
 
@@ -65,14 +65,14 @@ const Main: VFC = () => {
         </div>
       </div>
       <div className={s.right}>
-        <div className={s.title}>Meta Angel DAO NFT</div>
-        <div className={s.subtitle}>A seat on our investor board</div>
+        <div className={s.title}>MAPE</div>
+        <div className={s.subtitle}>Spread Your Wings 🦋</div>
 
         <div className={s.price}>
-          <span>Presale:</span> 0.8 ETH + Gas
+          <span>Presale:</span> 99 Matic + Gas
         </div>
         <div className={s.price}>
-          <span>Public sale:</span> 1 ETH + Gas
+          <span>Public sale:</span> 130 Matic + Gas
         </div>
 
         <div className={s.mint}>
