@@ -26,7 +26,7 @@ const Password: VFC<IProps> = ({ setIsLogin }) => {
     <section className={s.pass}>
       <div className={s.block}>
         <button onClick={loginWithMetaMask} type="button">
-          Connect a Wallet
+          Connect Your Wallet
         </button>
       </div>
     </section>
