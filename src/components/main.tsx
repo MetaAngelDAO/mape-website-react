@@ -101,9 +101,9 @@ const Main: VFC = () => {
     const realPrice = web3.utils.toWei(String(+amount * price), 'ether');
     const ogPrice = web3.utils.toWei(String(+amount * 1), 'ether');
 
-    const isOG1 = balance < 1 && OGALOne.includes(account);
-    const isOG2 = balance < 2 && OGALTwo.includes(account);
-    const isOG3 = balance < 10 && OGALThrid.includes(account);
+    const isOG1 = (balance + +amount) <= 1 && OGALOne.includes(account);
+    const isOG2 = (balance + +amount) <= 2 && OGALTwo.includes(account);
+    const isOG3 = (balance + +amount) <= 10 && OGALThrid.includes(account);
     const minPrice = (isOG1 || isOG2 || isOG3) ? ogPrice : realPrice;
 
     // console.log('minPrice', minPrice)
