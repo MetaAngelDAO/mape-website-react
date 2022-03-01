@@ -539,8 +539,6 @@ const Main: VFC = () => {
       "0x1C7b1Ea9A1d20c78969d81f2Fee156Fe783E8940",
       "0x4daAEF4Ca4279fe94ca22eD37151AE94c0C4Ea26",
       "0x44CFB2996c6D780C902ec0FFE71A7d64504B5057",
-      "0x60Db852DCc92923DA1dBAA631F5358a5E204fFa9",
-      "0xAe4f341C17322428BB882A828bF0f02C0f8728AA",
     ];
     let leafNodes = whitelistAddresses.map(addr => keccak256(addr));
     let merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
