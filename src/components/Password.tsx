@@ -13,7 +13,7 @@ const Password: VFC<IProps> = ({ setIsLogin }) => {
 
   const handleButtonClick = () => {
     if (password === pass) {
-      setIsLogin(true);
+      setIsLogin(false);
     }
   };
 
