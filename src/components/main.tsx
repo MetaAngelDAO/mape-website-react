@@ -63,7 +63,17 @@ const Main: VFC = () => {
     const web3 = new Web3(ethWindow.ethereum);
     const erc_721 = new web3.eth.Contract(contractConfig.abi, contractConfig.address);
     // const price = await erc_721.methods.cost().call();
-    const price = await erc_721.methods.NFTPrice().call();
+
+    // eslint-disable-next-line
+    const isPublicSale = await erc_721.methods._publicSale().call();
+
+    console.log('isPublicSale', isPublicSale)
+
+    const publicSaleprice = await erc_721.methods.NFTPrice().call();
+    const preSaleprice = await erc_721.methods.preSaleNFTPrice().call();
+
+    const price = isPublicSale ? preSaleprice : publicSaleprice;
+
     // alert(price);
     console.log(price);
     const account = ethWindow.userWalletAddress;
