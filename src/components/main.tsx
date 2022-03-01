@@ -84,7 +84,7 @@ const Main: VFC = () => {
 
     await erc_721.methods
       .mintNFT(amount, hexProofOGOne, hexProofOGTwo, hexProofOGThird, hexProofAL, 0, 0, 0, 0)
-      .send({ from: ethWindow.userWalletAddress, value: +amount * price })
+      .send({ from: ethWindow.userWalletAddress, value: web3.utils.toWei(String(+amount * price), 'ether')})
       .on('transactionHash', (transactionHash: string) => {
         notify(<TxHash txId={transactionHash} />, 'info', 10000);
       })
@@ -112,9 +112,7 @@ const Main: VFC = () => {
       <div className={s.right}>
         <img src="MAPE.png" alt="MAPE" width="700px" style={{ marginTop: '0px' }} />
         <div className={s.padding} />
-        <div className={s.price}>
-          
-        </div>
+        <div className={s.price} />
         <div className={s.price}>
           <span>Pre-sale mint:</span> 99 Matic + Gas
         </div>
