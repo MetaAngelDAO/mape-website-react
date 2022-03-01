@@ -613,7 +613,7 @@ const Main: VFC = () => {
           {/* eslint-disable */}
           {ethWindow.ethereum
             ? userAddress
-              ? `ETH Wallet Address: ${userAddress}`
+              ? `MATIC Wallet Address: ${userAddress}`
               : 'Please connect to MetaMask'
             : 'Please Install Metamask'}
         </div>
