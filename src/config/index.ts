@@ -1,5 +1,6 @@
 import { AbiItem } from 'web3-utils';
 
+export const password = 'mape';
 export const contractConfig = {
   address: '0x5Dfb20f7f046151f391E3538cB874af9240b17e4',
   abi: [
