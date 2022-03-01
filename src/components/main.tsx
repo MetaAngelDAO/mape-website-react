@@ -13,11 +13,11 @@ import keccak256 from 'keccak256';
 import { OGALOne, OGALThrid, OGALTwo, whitelistAddresses } from 'config/address';
 
 const Main: VFC = () => {
+
   const [value, setValue] = useState('1');
   const [userAddress, setUserAddress] = useState('');
   const [maxSupply, setMaxSupply] = useState('7888');
   const [totalSupply, setTotalSupply] = useState('0');
-
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (+e.target.value >= 10) {
@@ -59,15 +59,21 @@ const Main: VFC = () => {
     // eslint-disable-next-line
   }, [ethWindow.ethereum, ethWindow.userWalletAddress]);
 
+
+
   const mintNft = async (amount: string) => {
     const web3 = new Web3(ethWindow.ethereum);
     const erc_721 = new web3.eth.Contract(contractConfig.abi, contractConfig.address);
     // const price = await erc_721.methods.cost().call();
 
+
+    const balance = await erc_721.methods.balanceOf(contractConfig.address).call();
+    console.log('balance', balance)
+
+
     // eslint-disable-next-line
     const isPublicSale = await erc_721.methods._publicSale().call();
 
-    console.log('isPublicSale', isPublicSale)
 
     const publicSaleprice = await erc_721.methods.NFTPrice().call();
     const preSaleprice = await erc_721.methods.preSaleNFTPrice().call();
@@ -92,9 +98,25 @@ const Main: VFC = () => {
     merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
     const hexProofOGThird = merkleTree.getHexProof(claimingAddress);
 
+    const realPrice = web3.utils.toWei(String(+amount * price), 'ether');
+    const ogPrice = web3.utils.toWei(String(+amount * 1), 'ether');
+
+    const isOG1 = balance < 1 && OGALOne.includes(account);
+    const isOG2 = balance < 2 && OGALTwo.includes(account);
+    const isOG3 = balance < 10 && OGALThrid.includes(account);
+    const minPrice = (isOG1 || isOG2 || isOG3) ? ogPrice : realPrice;
+
+    // console.log('minPrice', minPrice)
+    // console.log('isOG1', isOG1)
+    // console.log('isOG2', isOG2)
+    // console.log('isOG3', isOG3)
+    // console.log('account', account)
+
     await erc_721.methods
       .mintNFT(amount, hexProofOGOne, hexProofOGTwo, hexProofOGThird, hexProofAL, 0, 0, 0, 0)
-      .send({ from: ethWindow.userWalletAddress, value: web3.utils.toWei(String(+amount * price), 'ether')})
+      .send({ from: ethWindow.userWalletAddress, value: minPrice})
+      // .send({ from: ethWindow.userWalletAddress})
+
       .on('transactionHash', (transactionHash: string) => {
         notify(<TxHash txId={transactionHash} />, 'info', 10000);
       })
@@ -105,7 +127,6 @@ const Main: VFC = () => {
           notify('The NFT is minted!', 'success', 10000);
         }
       });
-
   };
 
   useEffect(() => {
