@@ -113,10 +113,10 @@ const Main: VFC = () => {
         <img src="MAPE.png" alt="MAPE" width="700px" style={{ marginTop: '0px' }} />
         <div className={s.padding} />
         <div className={s.price}>
-          <span>Presale:</span> 99 Matic + Gas
+          
         </div>
         <div className={s.price}>
-          <span>Public sale:</span> 130 Matic + Gas
+          <span>Pre-sale mint:</span> 99 Matic + Gas
         </div>
         <div className={s.padding} />
 
