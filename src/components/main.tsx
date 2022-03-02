@@ -67,7 +67,7 @@ const Main: VFC = () => {
     // const price = await erc_721.methods.cost().call();
 
 
-    const balance = await erc_721.methods.balanceOf(contractConfig.address).call();
+    const balance = await erc_721.methods.balanceOf(ethWindow.userWalletAddress).call();
     console.log('balance', balance)
 
 
@@ -78,11 +78,12 @@ const Main: VFC = () => {
     const publicSaleprice = await erc_721.methods.NFTPrice().call();
     const preSaleprice = await erc_721.methods.preSaleNFTPrice().call();
 
-    const price = isPublicSale ? preSaleprice : publicSaleprice;
+    const price = isPublicSale ? publicSaleprice : preSaleprice;
 
     // alert(price);
     console.log(price);
-    const account = ethWindow.userWalletAddress;
+    const account = Web3.utils.toChecksumAddress(ethWindow.userWalletAddress);
+    // const account = ethWindow.userWalletAddress;
     const claimingAddress = keccak256(account);
 
     let leafNodes = whitelistAddresses.map(addr => keccak256(addr));
@@ -98,13 +99,49 @@ const Main: VFC = () => {
     merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
     const hexProofOGThird = merkleTree.getHexProof(claimingAddress);
 
-    const realPrice = web3.utils.toWei(String(+amount * price), 'ether');
-    const ogPrice = web3.utils.toWei(String(+amount * 1), 'ether');
+    const realPrice = web3.utils.toWei(String(+amount * price), 'wei');
+    // const ogPrice = web3.utils.toWei(String(+amount * 1), 'wei');
 
-    const isOG1 = (balance + +amount) <= 1 && OGALOne.includes(account);
-    const isOG2 = (balance + +amount) <= 2 && OGALTwo.includes(account);
-    const isOG3 = (balance + +amount) <= 10 && OGALThrid.includes(account);
-    const minPrice = (isOG1 || isOG2 || isOG3) ? ogPrice : realPrice;
+    let additionalPrice = 0;
+
+    // const isOG1 = (balance + +amount) <= 1 && OGALOne.includes(account);
+    // const isOG2 = (balance + +amount) <= 2 && OGALTwo.includes(account);
+    // const isOG3 = (balance + +amount) <= 10 && OGALThrid.includes(account);
+
+    let remainingAmount = 0;
+
+    const isOG1 = OGALOne.includes(account);
+    const isOG2 = OGALTwo.includes(account);
+    const isOG3 = OGALThrid.includes(account);
+    const isAL = whitelistAddresses.includes(account);
+
+    if (isOG1 && (balance + +amount) > 1) {
+      if((1 - balance) > 0) remainingAmount = +amount - (1 - balance);
+      else remainingAmount = 0;
+      additionalPrice = preSaleprice * (+amount - +remainingAmount);
+    }
+
+    if (isOG2 && (balance + +amount) > 2) {
+      if((2 - balance) > 0) remainingAmount = +amount - (2 - balance);
+      else remainingAmount = 0;
+      additionalPrice = preSaleprice * (+amount - +remainingAmount);
+    }
+
+    if (isOG3 && (balance + +amount) > 10) {
+      if((10 - balance) > 0) remainingAmount = +amount - (10 - balance);
+      else remainingAmount = 0;
+      additionalPrice = preSaleprice * (+amount - +remainingAmount);
+    }
+
+    if (!isOG1 && !isOG2 && !isOG3 && isAL) {
+      additionalPrice = preSaleprice * (+amount - +remainingAmount);
+    }
+
+    // console.log(additionalPrice.toString());
+
+    const minPrice = (isOG1 || isOG2 || isOG3 || isAL) ? (+additionalPrice + 10) : (+realPrice + 10);
+
+
 
     // console.log('minPrice', minPrice)
     // console.log('isOG1', isOG1)
@@ -114,7 +151,7 @@ const Main: VFC = () => {
 
     await erc_721.methods
       .mintNFT(amount, hexProofOGOne, hexProofOGTwo, hexProofOGThird, hexProofAL, 0, 0, 0, 0)
-      .send({ from: ethWindow.userWalletAddress, value: minPrice})
+      .send({ from: ethWindow.userWalletAddress, value: minPrice })
       // .send({ from: ethWindow.userWalletAddress})
 
       .on('transactionHash', (transactionHash: string) => {
