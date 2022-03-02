@@ -139,9 +139,7 @@ const Main: VFC = () => {
 
     // console.log(additionalPrice.toString());
 
-    const minPrice = (isOG1 || isOG2 || isOG3 || isAL) ? (+additionalPrice + 10) : (+realPrice + 10);
-
-
+    const minPrice = (isOG1 || isOG2 || isOG3 || isAL && !isPublicSale) ? (+additionalPrice + 10) : (+realPrice + 10);
 
     // console.log('minPrice', minPrice)
     // console.log('isOG1', isOG1)
