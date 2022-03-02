@@ -115,31 +115,33 @@ const Main: VFC = () => {
     const isOG3 = OGALThrid.includes(account);
     const isAL = whitelistAddresses.includes(account);
 
+    alert(isAL);
+
     if (isOG1 && (balance + +amount) > 1) {
-      if((1 - balance) > 0) remainingAmount = +amount - (1 - balance);
+      if((1 - balance) > 0) remainingAmount = 1 - balance;
       else remainingAmount = 0;
       additionalPrice = preSaleprice * (+amount - +remainingAmount);
     }
 
     if (isOG2 && (balance + +amount) > 2) {
-      if((2 - balance) > 0) remainingAmount = +amount - (2 - balance);
+      if((2 - balance) > 0) remainingAmount = 2 - balance;
       else remainingAmount = 0;
       additionalPrice = preSaleprice * (+amount - +remainingAmount);
     }
 
     if (isOG3 && (balance + +amount) > 10) {
-      if((10 - balance) > 0) remainingAmount = +amount - (10 - balance);
+      if((10 - balance) > 0) remainingAmount = 10 - balance;
       else remainingAmount = 0;
       additionalPrice = preSaleprice * (+amount - +remainingAmount);
     }
 
     if (!isOG1 && !isOG2 && !isOG3 && isAL) {
-      additionalPrice = preSaleprice * (+amount - +remainingAmount);
+      additionalPrice = preSaleprice * +amount;
     }
 
     // console.log(additionalPrice.toString());
 
-    const minPrice = ((isOG1 || isOG2 || isOG3 || isAL) && !isPublicSale) ? (+additionalPrice + 10) : (+realPrice + 10);
+    const minPrice = ((isOG1 || isOG2 || isOG3 || isAL) && !isPublicSale) ? (+additionalPrice + 100000) : (+realPrice + 100000);
 
     // console.log('minPrice', minPrice)
     // console.log('isOG1', isOG1)
