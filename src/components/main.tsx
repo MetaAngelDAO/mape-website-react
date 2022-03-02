@@ -115,8 +115,6 @@ const Main: VFC = () => {
     const isOG3 = OGALThrid.includes(account);
     const isAL = whitelistAddresses.includes(account);
 
-    alert(isAL);
-
     if (isOG1 && (balance + +amount) > 1) {
       if((1 - balance) > 0) remainingAmount = 1 - balance;
       else remainingAmount = 0;
