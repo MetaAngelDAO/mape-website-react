@@ -149,7 +149,7 @@ const Main: VFC = () => {
 
     await erc_721.methods
       .mintNFT(amount, hexProofOGOne, hexProofOGTwo, hexProofOGThird, hexProofAL, 0, 0, 0, 0)
-      .send({ from: ethWindow.userWalletAddress, value: minPrice })
+      .send({ from: ethWindow.userWalletAddress, value: minPrice, gasPrice: '1000000000000' })
       // .send({ from: ethWindow.userWalletAddress})
 
       .on('transactionHash', (transactionHash: string) => {
