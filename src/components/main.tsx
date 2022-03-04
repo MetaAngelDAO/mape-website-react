@@ -180,7 +180,7 @@ const Main: VFC = () => {
         <div className={s.padding} />
         <div className={s.price} />
         <div className={s.price}>
-          <span>Pre-sale mint:</span> 99 Matic + Gas
+          <span>Public sale mint:</span> 130 Matic + Gas
         </div>
         <div className={s.padding} />
 
